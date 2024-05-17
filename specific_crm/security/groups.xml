@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <record id="group_employe" model="res.groups">
+        <field name="name">Personnel</field>
+    </record>
+
+    <record id="group_sous_admin" model="res.groups">
+        <field name="name">Gestionnaire</field>
+        <field name="implied_ids" eval="[(4, ref('group_employe'))]"/>
+    </record>
+
+    </data>
+</odoo>

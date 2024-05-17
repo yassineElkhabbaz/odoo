@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_concis_saleorder" model="ir.actions.report">
+            <field name="name">Devis multi-sociétés</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">specific_crm.report_saleorder_concis</field>
+            <field name="report_file">specific_crm.report_saleorder_concis</field>
+<!--            <field name="print_report_name">(object.state in ('draft', 'sent') and 'DEVIS - %s' % (object.name)) or 'COMMANDE - %s' % (object.name)</field>-->
+            <field name="print_report_name">(object.state in ('draft', 'sent') and 'DEVIS - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_concis_commande" model="ir.actions.report">
+            <field name="name">Bon de Commande multi-sociétés</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">specific_crm.report_bc_concis</field>
+            <field name="report_file">specific_crm.report_bc_concis</field>
+<!--            <field name="print_report_name">(object.state in ('draft', 'sent') and 'DEVIS - %s' % (object.name)) or 'COMMANDE - %s' % (object.name)</field>-->
+            <field name="print_report_name">
+                ('Commande - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+<!--        <record id="action_report_pro_forma_invoice" model="ir.actions.report">-->
+<!--            <field name="name">PRO-FORMA Invoice</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="report_type">qweb-pdf</field>-->
+<!--            <field name="report_name">sale.report_saleorder_pro_forma</field>-->
+<!--            <field name="report_file">sale.report_saleorder_pro_forma</field>-->
+<!--            <field name="print_report_name">'PRO-FORMA - %s' % (object.name)</field>-->
+<!--            <field name="binding_model_id" ref="model_sale_order"/>-->
+<!--            <field name="binding_type">report</field>-->
+<!--            <field name="groups_id" eval="[(4, ref('sale.group_proforma_sales'))]"/>-->
+<!--        </record>-->
+    </data>
+</odoo>

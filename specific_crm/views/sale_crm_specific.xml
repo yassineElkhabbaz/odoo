@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<odoo>
+
+        <record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">
+            <field name="name">crm.inherited.crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="replace">
+                    <button string="Nouveau devis" name="action_sale_quotations_new" type="object" class="oe_highlight" data-hotkey="q"
+                        title="Create new quotation"
+                        attrs="{'invisible': ['|', ('type', '=', 'lead'),('marche_type', '!=', 'ferme') ]}"/>
+
+                    <button string="Créer BP" name="action_bp_new" type="object" class="oe_highlight" data-hotkey="q"
+                        title="Création BP"
+                    attrs="{'invisible': ['|', ('type', '=', 'lead'),('marche_type', '!=', 'cadre') ]}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_view_sale_quotation']" position="replace">
+
+                    <button class="oe_stat_button" type="object"
+                        name="action_view_sale_quotation" icon="fa-pencil-square-o" attrs="{'invisible': ['|', ('type', '=', 'lead'), ('marche_type', '!=', 'ferme')]}">
+                        <field name="quotation_count" widget="statinfo" string="Devis"/>
+                    </button>
+
+                    <button class="oe_stat_button" type="object"
+                        name="action_view_sale_quotation" icon="fa-pencil-square-o" attrs="{'invisible': ['|', ('type', '=', 'lead'), ('marche_type', '!=', 'cadre')]}">
+                        <field name="quotation_count" widget="statinfo" string="BP"/>
+                    </button>
+
+                </xpath>
+
+                <xpath expr="//button[@name='action_view_sale_order']" position="replace">
+
+                    <button class="oe_stat_button" type="object" attrs="{'invisible': ['|', '|', ('sale_order_count', '=', 0), ('type', '=', 'lead'), ('marche_type', '!=', 'ferme')]}"
+                        name="action_view_sale_order" icon="fa-usd">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"/></span>
+                            <span class="o_stat_text">Commande client</span>
+                            <field name="sale_order_count" invisible="1"/>
+                        </div>
+                    </button>
+
+                    <button class="oe_stat_button" type="object" attrs="{'invisible': ['|', '|', ('sale_order_count', '=', 0), ('type', '=', 'lead'), ('marche_type', '!=', 'cadre')]}"
+                        name="action_view_sale_order" icon="fa-usd">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"/></span>
+                            <span class="o_stat_text">BP validé</span>
+                            <field name="sale_order_count" invisible="1"/>
+                        </div>
+                    </button>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+</odoo>
+

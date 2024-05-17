@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+        <template id="external_layout_concis">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+
+            <div class="header">
+                <table style="width:100%;">
+                    <tr>
+                        <br/>
+                        <div class="text-center">
+<!--                        <td class="text-center" style="width:40%;line-height: 40%;font-size:11px">-->
+                            <br/>
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-width:200px;max-height:800px;" alt="logo"/>
+<!--                        </td>-->
+                        </div>
+
+                        <td style="width:30%;padding:auto;font-size:10px;">
+                            <br/>
+                            <center>
+
+                            </center>
+
+                            <table style="font-size:12px;width:100%;" class="first-page">
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <!-- <t t-call="web.address_layout"/>-->
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <table style="width:50%;">
+                    <tr>
+                        <div class="text-center">
+                            <p> <span t-if="company.name" t-field="company.name"></span><span > Au capital de 1.400.000 DHS</span></p>
+                        <p><b> Adresse : </b><span t-if="company.street" t-field="company.street"/>
+                                     <span t-if="company.street2" t-field="company.street2"/> - <span t-if="company.city" t-field="company.city"/>
+                        </p>
+                            <p t-if="company.phone">Tél :<span t-field="company.phone"/>
+                                 - Mobile :<span t-field="company.mobile"/> - FAX :<span t-field="company.fax"/></p>
+                            <p >IF :<span t-field="company.vat"/> - TP :<span t-field="company.tp"/>
+                                - RC :<span t-field="company.company_registry"/>- CNSS :<span t-field="company.cnss"/>-ICE :<span t-field="company.ice"/></p>
+
+                        </div>
+                        <td style="width:4%;">
+                            <div style="background-color:orange;border-radius: 40%;text-align:center;">
+                                <span class="page"/>/<span class="topage"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+        </template>
+
+    </data>
+</odoo>

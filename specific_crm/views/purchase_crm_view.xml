@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record id="achat_action_quotations_new" model="ir.actions.act_window">
+        <field name="name">Achat</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': active_id, 'default_opportunity_id': active_id, 'default_type_achat': 'opportunity'}</field>
+    </record>
+
+    <record id="achat_action_quotations" model="ir.actions.act_window">
+        <field name="name">Achats</field>
+        <field name="res_model">purchase.order</field>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': [active_id], 'default_opportunity_id': active_id, 'default_type_achat': 'opportunity'}</field>
+    </record>
+
+    <record id="purchase_action_orders" model="ir.actions.act_window">
+        <field name="name">Commandes</field>
+        <field name="res_model">purchase.order</field>
+        <field name="domain">[('opportunity_id', '=', active_id), ('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+        <field name="context">{'search_default_opportunity_id': [active_id], 'default_opportunity_id': active_id}</field>
+    </record>
+
+    <record id="purchase_crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.oppor.inherited.purchase</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="replace">
+                    <button name="action_set_won_rainbowman" string="MARQUER COMME GAGNÉ"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible': [('probability', '!=', 70)]}"/>
+            </xpath>
+
+            <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="before">
+                        <button name="action_set_qualifie" string="QUALIFIER L'OPPORTUNITÉ"
+                type="object" class="oe_highlight"
+                attrs="{'invisible': [('probability', '!=', 10)]}"/>
+                        <button name="action_set_prop" string="TRANSFORMER EN PROPOSITION"
+                type="object" class="oe_highlight"
+                attrs="{'invisible': [('probability', '!=', 30)]}"/>
+
+                <button string="Créer une demande d'achat" name="%(achat_action_quotations_new)d" type="action" class="oe_highlight"
+                        context="{'search_type_achat': 'opportunity',
+                              'default_type_achat': 'opportunity'}" attrs="{'invisible': [('type', '=', 'lead')]}"
+
+                    />
+            </xpath>
+            <button name="action_schedule_meeting" position="before">
+                <button class="oe_stat_button" type="action" attrs="{'invisible': [('purchase_number', '=', 0)]}"
+                        name="%(achat_action_quotations)d" icon="fa-pencil-square"
+                        context="{'search_default_draft': 1}">
+                    <div class="o_stat_info">
+                        <field name="purchase_number" class="o_stat_value"/>
+                        <span class="o_stat_text"> Achat(s) </span>
+                    </div>
+                </button>
+                <button class="oe_stat_button" type="action" attrs="{'invisible': [('purchase_amount_total', '=', 0)]}"
+                        name="%(purchase_action_orders)d" icon="fa-euro"
+                        context="{'default_type_achat': 'opportunity'}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="purchase_amount_total" widget="monetary" /></span>
+                        <span class="o_stat_text"> Commande(s) </span>
+                    </div>
+                </button>
+            </button>
+        </field>
+    </record>
+
+    <record id="purchase_order_spec" model="ir.ui.view">
+        <field name="name">Commande Fournisseur</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="delai_livraison"/>
+                    <field name="lieu_livraison"/>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="mode_reglement"/>
+                    
+            </xpath>
+        </field>
+    </record>
+
+    
+</odoo>

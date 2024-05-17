@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+management_tenders_source_id,Management Tenders Source,model_management_tenders_source,base.group_user,1,1,1,1
+management_tenders_judgment_id,Management Tenders Judgment,model_management_tenders_judgment,base.group_user,1,1,1,1
+management_tenders_validation_id,Management Tenders Validation,model_management_tenders_validation,base.group_user,1,1,1,1
+management_tenders_stage_id,Management Tenders Stage,model_management_tenders_stage,base.group_user,1,1,1,1
+management_tenders_folder_id,Management Tenders Folder,model_management_tenders_folder,base.group_user,1,1,1,1
+management_tenders_dossier,Management Tenders dossier,model_management_tenders_dossier,base.group_user,1,1,1,1
+lot_multiple_user,Management Lot m,model_lot_multiple,base.group_user,1,1,1,1
